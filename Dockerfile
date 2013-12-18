@@ -38,10 +38,12 @@ RUN apt-get -y install git
 
 # install maven from a PPA
 RUN add-apt-repository ppa:natecarlson/maven3
+RUN apt-get update
 RUN apt-get update && apt-get install --assume-yes maven3
 
 # install node.js from PPA
 RUN add-apt-repository ppa:chris-lea/node.js
+RUN apt-get update
 RUN apt-get install -y nodejs
 
 # install yeoman
@@ -52,3 +54,5 @@ RUN npm install -g generator-jhipster
 
 # Launch JHipster
 CMD ["yo", "jhipster"]
+
+
