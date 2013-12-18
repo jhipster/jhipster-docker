@@ -43,7 +43,6 @@ RUN apt-get update && apt-get install --assume-yes maven3
 # install node.js from PPA
 RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get install -y nodejs
-RUN npm install -g npm
 
 # install yeoman
 RUN npm install -g yo
