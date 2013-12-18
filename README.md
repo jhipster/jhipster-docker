@@ -1,4 +1,4 @@
-Docker.io container for JHipster
+Docker.io image for JHipster
 =============
 
 This repository makes a Docker "Trusted build" that is available on:
@@ -12,4 +12,4 @@ To use this docker image:
 - Type 
 ```
 docker pull  jdubois/jhipster-docker
-````
+```
