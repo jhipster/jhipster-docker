@@ -39,7 +39,7 @@ docker pull jdubois/jhipster-docker
 Run The docker image (the shared folder is "/jhipster" in the Docker container, and we forward port 8080 which is used by Tomcat):
 
 ```
-docker run -v /vagrant/jhipster:/jhipster -p 8080:8080 -i -t jdubois/jhipster-docker /bin/bash
+docker run -v /vagrant/jhipster:/jhipster -p 8080:49080 -i -t jdubois/jhipster-docker /bin/bash
 ```
 
 You can then go to the /jhipster directory in your container, and start building your app inside Docker:
@@ -53,4 +53,11 @@ Once your application is created, you can run all the normal grunt/bower/maven c
 mvn tomcat7:run
 ```
 
-On your host machine, you should be able to access the running application. And all the generated files should be available in your shared folder.
+** Congratulations! You've launched your JHipster app inside Docker! **
+
+On your host machine, you should be able to :
+
+- Access the running application at [http://localhost:49080](http://localhost:49080)
+- Get all the generated files inside your shared folder
+
+As the generated files are in your shared folder, they will not be deleted if you stop your Docker container. However, if you don't want Docker to keep downloading all the Maven and NPM dependencies every time you start the container, you should commit its state.
