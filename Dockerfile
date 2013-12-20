@@ -42,6 +42,7 @@ RUN npm install -g generator-jhipster
 RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster
 RUN echo 'jhipster:jhipster' |chpasswd
 RUN cd /home/jhipster && sudo -u jhipster git clone https://github.com/jhipster/jhipster-sample-app.git
+RUN cd /home/jhipster/jhipster-sample-app && npm install -g
 RUN cd /home/jhipster/jhipster-sample-app && sudo -u jhipster mvn -Pprod package
 
 WORKDIR /home/jhipster
