@@ -19,8 +19,8 @@ RUN apt-get install -y oracle-java7-installer && apt-get clean
 RUN update-java-alternatives -s java-7-oracle
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> ~/.bashrc
 
-# install git and sudo
-RUN apt-get -y install git sudo
+# install utilities
+RUN apt-get -y install vim git sudo bzip2 fontconfig
 
 # install maven from a PPA
 RUN add-apt-repository ppa:natecarlson/maven3
@@ -42,7 +42,7 @@ RUN npm install -g generator-jhipster
 RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster
 RUN echo 'jhipster:jhipster' |chpasswd
 RUN cd /home/jhipster && sudo -u jhipster git clone https://github.com/jhipster/jhipster-sample-app.git
-RUN cd /home/jhipster/jhipster-sample-app && npm install -g
+RUN cd /home/jhipster/jhipster-sample-app && npm install
 RUN cd /home/jhipster/jhipster-sample-app && sudo -u jhipster mvn -Pprod package
 
 WORKDIR /home/jhipster
@@ -50,4 +50,4 @@ USER jhipster
 
 # set up a development environment
 VOLUME ["/jhipster"]
-EXPOSE 49080
+EXPOSE 8080
