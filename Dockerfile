@@ -39,7 +39,7 @@ RUN npm install -g yo
 RUN npm install -g generator-jhipster
 
 # create the "jhipster" user and install the sample app to download all Maven, NPM and Bower dependencies
-RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster
+RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster && adduser jhipster sudo
 RUN echo 'jhipster:jhipster' |chpasswd
 RUN cd /home/jhipster && sudo -u jhipster git clone https://github.com/jhipster/jhipster-sample-app.git
 RUN cd /home/jhipster/jhipster-sample-app && npm install
@@ -47,7 +47,7 @@ RUN cd /home/jhipster/jhipster-sample-app && chown -R jhipster:jhipster /home/jh
 #RUN cd /home/jhipster/jhipster-sample-app && sudo -u jhipster mvn -Pprod package
 
 WORKDIR /home/jhipster
-USER jhipster
+#USER jhipster
 
 # set up a development environment
 VOLUME ["/jhipster"]
