@@ -44,6 +44,7 @@ RUN echo 'jhipster:jhipster' |chpasswd
 RUN cd /home/jhipster && sudo -u jhipster git clone https://github.com/jhipster/jhipster-sample-app.git
 RUN cd /home/jhipster/jhipster-sample-app && npm install
 RUN cd /home/jhipster/jhipster-sample-app && chown -R jhipster:jhipster /home/jhipster
+RUN cd /home/jhipster/jhipster-sample-app && sudo -u jhipster dependency:go-offline
 #RUN cd /home/jhipster/jhipster-sample-app && sudo -u jhipster mvn -Pprod package
 
 WORKDIR /home/jhipster
