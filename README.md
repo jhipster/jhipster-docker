@@ -38,11 +38,11 @@ docker pull jdubois/jhipster-docker
 
 Run The docker image, with the following options:
 
-- Port 8080 is a dynamically allocated TCP port on all available interfaces of the host machine
+- Port 8080 in docker is fowarded to port 49080, which is then automatically exposed by Vagrant
 - The Docker "/jhipster" folder is shared to the Vagrant "/vagrant/jhipster" folder, which is shared to your host (it's the directory you started Vagrant from)
 
 ```
-docker run -v /vagrant/jhipster:/jhipster -p 8080 -i -t jdubois/jhipster-docker /bin/bash
+docker run -v /vagrant/jhipster:/jhipster -p 49080:8080 -i -t jdubois/jhipster-docker /bin/bash
 ```
 
 You can then go to the /jhipster directory in your container, and start building your app inside Docker:
