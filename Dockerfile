@@ -20,7 +20,7 @@ RUN update-java-alternatives -s java-7-oracle
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> ~/.bashrc
 
 # install utilities
-RUN apt-get -y install vim git sudo bzip2 fontconfig
+RUN apt-get -y install vim git sudo zip bzip2 fontconfig
 
 # install maven from a PPA
 RUN add-apt-repository ppa:natecarlson/maven3
@@ -40,10 +40,13 @@ RUN npm install -g generator-jhipster
 
 # fetch the sample application, to init the Maven repository
 RUN mkdir /jhipster
-RUN cd /jhipster && git clone https://github.com/jhipster/jhipster-sample-app.git
-RUN cd /jhipster/jhipster-sample-app && npm install
-RUN cd /jhipster/jhipster-sample-app && mvn dependency:go-offline
-RUN cd /jhipster/jhipster-sample-app && mvn -Pprod package
+RUN cd /jhipster && \
+    wget https://github.com/jhipster/jhipster-sample-app/archive/v0.6.1.1.zip && \
+    unzip v0.6.1.1.zip && \
+    rm v0.6.1.1.zip
+RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && npm install
+RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && mvn dependency:go-offline
+RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && mvn -Pprod package
 
 WORKDIR /jhipster
 
