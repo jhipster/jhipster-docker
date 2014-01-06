@@ -42,15 +42,14 @@ RUN npm install -g generator-jhipster
 RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster && adduser jhipster sudo
 RUN echo 'jhipster:jhipster' |chpasswd
 
-RUN mkdir /jhipster
-RUN cd /jhipster && \
+RUN cd /home/jhipster && \
     wget https://github.com/jhipster/jhipster-sample-app/archive/v0.6.1.1.zip && \
     unzip v0.6.1.1.zip && \
     rm v0.6.1.1.zip
-RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && npm install
-RUN cd / && chown -R jhipster:jhipster /jhipster
-RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && sudo -u jhipster mvn dependency:go-offline
-RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && su - jhipster -c "cd /jhipster/jhipster-sample-app-0.6.1.1 && mvn -Pprod package"
+RUN cd /home/jhipster/jhipster-sample-app-0.6.1.1 && npm install
+RUN cd /home && chown -R jhipster:jhipster /home/jhipster
+RUN cd /home/jhipster/jhipster-sample-app-0.6.1.1 && sudo -u jhipster mvn dependency:go-offline
+RUN cd /home/jhipster/jhipster-sample-app-0.6.1.1 && su - jhipster -c "cd /home/jhipster/jhipster-sample-app-0.6.1.1 && mvn -Pprod package"
 
 WORKDIR /jhipster
 
