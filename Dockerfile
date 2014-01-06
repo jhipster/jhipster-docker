@@ -50,7 +50,7 @@ RUN cd /jhipster && \
 RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && npm install
 RUN cd / && chown -R jhipster:jhipster /jhipster
 RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && sudo -u jhipster mvn dependency:go-offline
-RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && su - jhipster -c "cd jhipster-sample-app-0.6.1.1 && mvn -Pprod package"
+RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && su - jhipster -c "cd /jhipster/jhipster-sample-app-0.6.1.1 && mvn -Pprod package"
 
 WORKDIR /jhipster
 
