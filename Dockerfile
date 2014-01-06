@@ -38,15 +38,17 @@ RUN npm install -g yo
 # install JHipster
 RUN npm install -g generator-jhipster
 
-# fetch the sample application, to init the Maven repository
-RUN mkdir /jhipster
-RUN cd /jhipster && \
-    wget https://github.com/jhipster/jhipster-sample-app/archive/v0.6.1.1.zip && \
+# create the "jhipster" user and install the sample app to download all Maven, NPM and Bower dependencies
+RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster && adduser jhipster sudo
+RUN echo 'jhipster:jhipster' |chpasswd
+
+RUN wget https://github.com/jhipster/jhipster-sample-app/archive/v0.6.1.1.zip && \
     unzip v0.6.1.1.zip && \
     rm v0.6.1.1.zip
 RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && npm install
-RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && mvn dependency:go-offline
-RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && mvn -Pprod package
+RUN cd / && chown -R jhipster:jhipster /jhipster
+RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && sudo -u jhipster mvn dependency:go-offline
+RUN cd /jhipster/jhipster-sample-app-0.6.1.1 && su - jhipster -c "cd jhipster-sample-app && mvn -Pprod package"
 
 WORKDIR /jhipster
 
