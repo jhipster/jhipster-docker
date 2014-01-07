@@ -9,6 +9,9 @@ RUN apt-get -y update
 # install python-software-properties (so you can do add-apt-repository)
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python-software-properties
 
+# install SSH server so we can connect multiple times to the container
+RUN apt-get install -y openssh-server && mkdir /var/run/sshd
+
 # install oracle java from PPA
 RUN add-apt-repository ppa:webupd8team/java -y
 RUN apt-get update
@@ -38,7 +41,7 @@ RUN npm install -g yo
 # install JHipster
 RUN npm install -g generator-jhipster
 
-# create the "jhipster" user and install the sample app to download all Maven, NPM and Bower dependencies
+# create the "jhipster" user and install the sample app to download all Maven dependencies
 RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster && adduser jhipster sudo
 RUN echo 'jhipster:jhipster' |chpasswd
 
@@ -49,10 +52,10 @@ RUN cd /home/jhipster && \
 RUN cd /home/jhipster/jhipster-sample-app-0.6.1.1 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
 RUN cd /home/jhipster/jhipster-sample-app-0.6.1.1 && sudo -u jhipster mvn dependency:go-offline
-RUN cd /home/jhipster/jhipster-sample-app-0.6.1.1 && su - jhipster -c "cd /home/jhipster/jhipster-sample-app-0.6.1.1 && mvn -Pprod package"
 
-WORKDIR /jhipster
-
-# expose the working directory and the Tomcat port
+# expose the working directory, the Tomcat port, the Grunt server port, the SSHD port, and run SSHD
 VOLUME ["/jhipster"]
 EXPOSE 8080
+EXPOSE 9000
+EXPOSE 22
+CMD    /usr/sbin/sshd -D
