@@ -26,11 +26,23 @@ mkdir ~/jhipster
 
 Run The docker image, with the following options:
 
-- Port 8080 in docker is fowarded to the local port 8080
 - The Docker "/jhipster" folder is shared to the local "~/jhipster" folder
+- Forward all ports exposed by docker (8080 for Tomcat, 9000 for the Grunt server, 22 for SSHD). In the following example we forward the container 22 port to the host 4022 port, to prevent some port conflicts:
 
 ```
-sudo docker run -v ~/jhipster:/jhipster -p 8080:8080 -i -t jdubois/jhipster-docker /bin/bash
+sudo docker run -v ~/jhipster:/jhipster -p 8080:8080 -p 9000:9000 -p 4022:22 -t jdubois/jhipster-docker
+```
+
+You can now connect to your docker container with SSH. You can connect as "root/jhipster" or as "jhipster/jhipster", and we recommand you use the "jhipster" user as some of the tool used are not meant to be run by the root user.
+
+Start by adding your SSH public key to the Docker container:
+```
+cat .ssh/id_rsa.pub | ssh -p 4022 jhipster@localhost 'mkdir .ssh && cat >> .ssh/authorized_keys'
+```
+
+You can now connect to the Docker container:
+```
+ssh -p 4022 jhipster@localhost
 ```
 
 You can then go to the /jhipster directory in your container, and start building your app inside Docker:
@@ -42,11 +54,6 @@ yo jhipster
 Once your application is created, you can run all the normal grunt/bower/maven commands, for example:
 ```
 mvn tomcat7:run
-```
-
-Note that if you want to use bower, as you are logged in as root, you must use:
-```
-bower install --allow-root
 ```
 
 ** Congratulations! You've launched your JHipster app inside Docker! **

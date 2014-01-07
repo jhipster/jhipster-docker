@@ -38,20 +38,26 @@ RUN apt-get install -y nodejs
 # install yeoman
 RUN npm install -g yo
 
+# install the Compass CSS Authoring Framework
+RUN apt-get install ruby1.9.1
+RUN gem update --system && gem install compass
+
 # install JHipster
 RUN npm install -g generator-jhipster
 
-# create the "jhipster" user and install the sample app to download all Maven dependencies
+# configure the "jhipster" and "root" users
+RUN echo 'root:jhipster' |chpasswd
 RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster && adduser jhipster sudo
 RUN echo 'jhipster:jhipster' |chpasswd
 
+# install the sample app to download all Maven dependencies
 RUN cd /home/jhipster && \
-    wget https://github.com/jhipster/jhipster-sample-app/archive/v0.6.1.1.zip && \
-    unzip v0.6.1.1.zip && \
-    rm v0.6.1.1.zip
-RUN cd /home/jhipster/jhipster-sample-app-0.6.1.1 && npm install
+    wget https://github.com/jhipster/jhipster-sample-app/archive/v0.6.1.2.zip && \
+    unzip v0.6.1.2.zip && \
+    rm v0.6.1.2.zip
+RUN cd /home/jhipster/jhipster-sample-app-0.6.1.2 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
-RUN cd /home/jhipster/jhipster-sample-app-0.6.1.1 && sudo -u jhipster mvn dependency:go-offline
+RUN cd /home/jhipster/jhipster-sample-app-0.6.1.2 && sudo -u jhipster mvn dependency:go-offline
 
 # expose the working directory, the Tomcat port, the Grunt server port, the SSHD port, and run SSHD
 VOLUME ["/jhipster"]
