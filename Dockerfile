@@ -39,7 +39,7 @@ RUN apt-get install -y nodejs
 RUN npm install -g yo
 
 # install the Compass CSS Authoring Framework
-RUN apt-get install ruby1.9.1
+RUN apt-get install -y ruby1.9.1
 RUN gem update --system && gem install compass
 
 # install JHipster
