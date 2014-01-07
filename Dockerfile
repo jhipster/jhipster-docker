@@ -56,7 +56,7 @@ RUN cd /home && chown -R jhipster:jhipster /home/jhipster
 RUN cd /home/jhipster/jhipster-sample-app-0.6.1.2 && sudo -u jhipster mvn dependency:go-offline
 
 # install the Compass CSS Authoring Framework for the "jhipster" user
-RUN su - jhipster -c "curl -L get.rvm.io | bash -s stable && rvm install 1.9.1 && gem install compass sass"
+RUN su - jhipster -c "curl -L get.rvm.io | bash -s stable && source ~/.rvm/scripts/rvm && rvm install 1.9.1 && gem install compass sass"
 
 # expose the working directory, the Tomcat port, the Grunt server port, the SSHD port, and run SSHD
 VOLUME ["/jhipster"]
