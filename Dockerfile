@@ -39,7 +39,7 @@ RUN apt-get install -y nodejs
 RUN npm install -g yo
 
 # install JHipster
-RUN npm install -g generator-jhipster@0.9.0
+RUN npm install -g generator-jhipster@0.9.1
 
 # configure the "jhipster" and "root" users
 RUN echo 'root:jhipster' |chpasswd
@@ -48,12 +48,12 @@ RUN echo 'jhipster:jhipster' |chpasswd
 
 # install the sample app to download all Maven dependencies
 RUN cd /home/jhipster && \
-    wget https://github.com/jhipster/jhipster-sample-app/archive/v0.9.0.zip && \
-    unzip v0.9.0.zip && \
-    rm v0.9.0.zip
-RUN cd /home/jhipster/jhipster-sample-app-0.9.0 && npm install
+    wget https://github.com/jhipster/jhipster-sample-app/archive/v0.9.1.zip && \
+    unzip v0.9.1.zip && \
+    rm v0.9.1.zip
+RUN cd /home/jhipster/jhipster-sample-app-0.9.1 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
-RUN cd /home/jhipster/jhipster-sample-app-0.9.0 && sudo -u jhipster mvn dependency:go-offline
+RUN cd /home/jhipster/jhipster-sample-app-0.9.1 && sudo -u jhipster mvn dependency:go-offline
 
 # install the Compass CSS Authoring Framework
 RUN curl -L get.rvm.io | bash -s stable
