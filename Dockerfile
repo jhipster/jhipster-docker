@@ -1,5 +1,5 @@
 # DOCKER-VERSION 0.7.1
-FROM      ubuntu:12.04
+FROM      ubuntu:14.04
 MAINTAINER Julien Dubois <julien.dubois@gmail.com>
 
 # make sure the package repository is up to date
