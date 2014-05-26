@@ -23,7 +23,7 @@ RUN update-java-alternatives -s java-7-oracle
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> ~/.bashrc
 
 # install utilities
-RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl
+RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl0.15.0
 
 # install maven from a PPA
 RUN add-apt-repository ppa:natecarlson/maven3
@@ -39,7 +39,7 @@ RUN apt-get install -y nodejs
 RUN npm install -g yo
 
 # install JHipster
-RUN npm install -g generator-jhipster@0.14.0
+RUN npm install -g generator-jhipster@0.15.0
 
 # configure the "jhipster" and "root" users
 RUN echo 'root:jhipster' |chpasswd
@@ -48,12 +48,12 @@ RUN echo 'jhipster:jhipster' |chpasswd
 
 # install the sample app to download all Maven dependencies
 RUN cd /home/jhipster && \
-    wget https://github.com/jhipster/jhipster-sample-app/archive/v0.14.0.zip && \
-    unzip v0.14.0.zip && \
-    rm v0.14.0.zip
-RUN cd /home/jhipster/jhipster-sample-app-0.14.0 && npm install
+    wget https://github.com/jhipster/jhipster-sample-app/archive/v0.15.0.zip && \
+    unzip v0.15.0.zip && \
+    rm v0.15.0.zip
+RUN cd /home/jhipster/jhipster-sample-app-0.15.0 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
-RUN cd /home/jhipster/jhipster-sample-app-0.14.0 && sudo -u jhipster mvn dependency:go-offline
+RUN cd /home/jhipster/jhipster-sample-app-0.15.0 && sudo -u jhipster mvn dependency:go-offline
 
 # install the Compass CSS Authoring Framework
 RUN curl -L get.rvm.io | bash -s stable
