@@ -10,13 +10,13 @@ RUN apt-get -y update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python-software-properties software-properties-common
 
 # install SSH server so we can connect multiple times to the container
-RUN apt-get install -y openssh-server && mkdir /var/run/sshd
+RUN apt-get -y install openssh-server && mkdir /var/run/sshd
 
 # install oracle java from PPA
 RUN add-apt-repository ppa:webupd8team/java -y
 RUN apt-get update
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get install -y oracle-java7-installer && apt-get clean
+RUN apt-get -y install oracle-java7-installer && apt-get clean
 
 # Set oracle java as the default java
 RUN update-java-alternatives -s java-7-oracle
@@ -26,12 +26,12 @@ RUN echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> ~/.bashrc
 RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl
 
 # install maven
-RUN apt-get install maven
+RUN apt-get -y install maven
 
 # install node.js from PPA
 RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
-RUN apt-get install -y nodejs
+RUN apt-get -y install nodejs
 
 # install yeoman
 RUN npm install -g yo
