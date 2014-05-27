@@ -25,10 +25,8 @@ RUN echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> ~/.bashrc
 # install utilities
 RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl
 
-# install maven from a PPA
-RUN add-apt-repository ppa:natecarlson/maven3
-RUN apt-get update && apt-get install --assume-yes maven3
-RUN ln -s /usr/share/maven3/bin/mvn /usr/bin/mvn
+# install maven
+sudo apt-get install maven
 
 # install node.js from PPA
 RUN add-apt-repository ppa:chris-lea/node.js
