@@ -56,6 +56,7 @@ RUN cd /home/jhipster/jhipster-sample-app-0.15.0 && sudo -u jhipster mvn depende
 # install the Compass CSS Authoring Framework
 RUN curl -L get.rvm.io | bash -s stable
 RUN sudo bash -c "source /etc/profile.d/rvm.sh"
+RUN sudo bash -c "ln -sf /proc/self/fd /dev/fd"
 RUN sudo bash -c "rvm requirements"
 RUN sudo bash -c "rvm install 2.1.2"
 RUN sudo bash -c "gem install compass sass"
