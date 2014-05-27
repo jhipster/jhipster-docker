@@ -23,7 +23,7 @@ RUN update-java-alternatives -s java-7-oracle
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> ~/.bashrc
 
 # install utilities
-RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl0.15.0
+RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl
 
 # install maven from a PPA
 RUN add-apt-repository ppa:natecarlson/maven3
