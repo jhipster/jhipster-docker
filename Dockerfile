@@ -37,7 +37,7 @@ RUN apt-get -y install nodejs
 RUN npm install -g yo
 
 # install JHipster
-RUN npm install -g generator-jhipster@1.7.0
+RUN npm install -g generator-jhipster@1.7.1
 
 # configure the "jhipster" and "root" users
 RUN echo 'root:jhipster' |chpasswd
@@ -46,12 +46,12 @@ RUN echo 'jhipster:jhipster' |chpasswd
 
 # install the sample app to download all Maven dependencies
 RUN cd /home/jhipster && \
-    wget https://github.com/jhipster/jhipster-sample-app/archive/v1.7.0.zip && \
-    unzip v1.7.0.zip && \
-    rm v1.7.0.zip
-RUN cd /home/jhipster/jhipster-sample-app-1.7.0 && npm install
+    wget https://github.com/jhipster/jhipster-sample-app/archive/v1.7.1.zip && \
+    unzip v1.7.1.zip && \
+    rm v1.7.1.zip
+RUN cd /home/jhipster/jhipster-sample-app-1.7.1 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
-RUN cd /home/jhipster/jhipster-sample-app-1.7.0 && sudo -u jhipster mvn dependency:go-offline
+RUN cd /home/jhipster/jhipster-sample-app-1.7.1 && sudo -u jhipster mvn dependency:go-offline
 
 # expose the working directory, the Tomcat port, the Grunt server port, the SSHD port, and run SSHD
 VOLUME ["/jhipster"]
