@@ -15,12 +15,12 @@ RUN apt-get -y install openssh-server && mkdir /var/run/sshd
 # install oracle java from PPA
 RUN add-apt-repository ppa:webupd8team/java -y
 RUN apt-get update
-RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get -y install oracle-java7-installer && apt-get clean
+RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+RUN apt-get -y install oracle-java8-installer && apt-get clean
 
 # Set oracle java as the default java
-RUN update-java-alternatives -s java-7-oracle
-RUN echo "export JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> ~/.bashrc
+RUN update-java-alternatives -s java-8-oracle
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> ~/.bashrc
 
 # install utilities
 RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl
@@ -37,7 +37,7 @@ RUN apt-get -y install nodejs
 RUN npm install -g yo
 
 # install JHipster
-RUN npm install -g generator-jhipster@1.8.1
+RUN npm install -g generator-jhipster@1.9.0
 
 # configure the "jhipster" and "root" users
 RUN echo 'root:jhipster' |chpasswd
@@ -46,12 +46,12 @@ RUN echo 'jhipster:jhipster' |chpasswd
 
 # install the sample app to download all Maven dependencies
 RUN cd /home/jhipster && \
-    wget https://github.com/jhipster/jhipster-sample-app/archive/v1.8.1.zip && \
-    unzip v1.8.1.zip && \
-    rm v1.8.1.zip
-RUN cd /home/jhipster/jhipster-sample-app-1.8.1 && npm install
+    wget https://github.com/jhipster/jhipster-sample-app/archive/v1.9.0.zip && \
+    unzip v1.9.0.zip && \
+    rm v1.9.0.zip
+RUN cd /home/jhipster/jhipster-sample-app-1.9.0 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
-RUN cd /home/jhipster/jhipster-sample-app-1.8.1 && sudo -u jhipster mvn dependency:go-offline
+RUN cd /home/jhipster/jhipster-sample-app-1.9.0 && sudo -u jhipster mvn dependency:go-offline
 
 # expose the working directory, the Tomcat port, the Grunt server port, the SSHD port, and run SSHD
 VOLUME ["/jhipster"]
