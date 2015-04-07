@@ -55,7 +55,5 @@ RUN cd /home/jhipster/jhipster-sample-app-2.7.0 && sudo -u jhipster mvn dependen
 
 # expose the working directory, the Tomcat port, the Grunt server port, the SSHD port, and run SSHD
 VOLUME ["/jhipster"]
-EXPOSE 8080
-EXPOSE 9000
-EXPOSE 22
+EXPOSE 8080 9000 22
 CMD    /usr/sbin/sshd -D
