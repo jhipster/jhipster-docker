@@ -33,7 +33,7 @@ RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
 RUN apt-get install -y nodejs
 
 # install yeoman
-RUN npm install -g yo
+RUN npm install -g yo bower grunt-cli
 
 # install JHipster
 RUN npm install -g generator-jhipster@2.7.0
