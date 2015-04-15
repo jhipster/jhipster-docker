@@ -52,7 +52,7 @@ RUN cd /home/jhipster/jhipster-sample-app-2.7.0 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
 RUN cd /home/jhipster/jhipster-sample-app-2.7.0 && sudo -u jhipster mvn dependency:go-offline
 
-# expose the working directory, the Tomcat port, the Grunt server port, the SSHD port, and run SSHD
+# expose the working directory, the Tomcat port, the BrowserSync ports, the SSHD port, and run SSHD
 VOLUME ["/jhipster"]
-EXPOSE 8080 9000 22
+EXPOSE 8080 3000 3001 22
 CMD    /usr/sbin/sshd -D
