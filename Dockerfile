@@ -29,7 +29,7 @@ RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl
 RUN apt-get -y install maven
 
 # install node.js
-RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
+RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
 RUN apt-get install -y nodejs
 
 # install yeoman
