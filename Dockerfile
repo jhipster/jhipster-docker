@@ -51,6 +51,7 @@ RUN cd /home/jhipster && \
 RUN cd /home/jhipster/jhipster-sample-app-2.20.0 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
 RUN cd /home/jhipster/jhipster-sample-app-2.20.0 && sudo -u jhipster mvn dependency:go-offline
+RUN ln -s /home/jhipster/jhipster-sample-app-2.20.0 /home/jhipster/jhipster-sample-app
 
 # expose the working directory, the Tomcat port, the BrowserSync ports, the SSHD port, and run SSHD
 VOLUME ["/jhipster"]
