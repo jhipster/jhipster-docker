@@ -45,7 +45,7 @@ RUN cd /home/jhipster && \
     rm v2.23.0.zip
 RUN cd /home/jhipster/jhipster-sample-app-2.23.0 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
-RUN cd /home/jhipster/jhipster-sample-app-2.23.0
+# RUN cd /home/jhipster/jhipster-sample-app-2.23.0
 # RUN sudo -u jhipster mvn dependency:go-offline
 RUN ln -s /home/jhipster/jhipster-sample-app-2.23.0 /home/jhipster/jhipster-sample-app
 
