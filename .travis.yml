@@ -5,7 +5,7 @@ before_install:
   - sudo service docker restart ; sleep 10
 install:
   - docker build -t jdubois/jhipster-docker .
-  - docker run -d -p 8080:8080 -p 3000:3000 -p 3001:3001 -p 4022:22 -w /home/jhipster/jhipster-sample-app/ --name=jhipster jdubois/jhipster-docker mvn spring-boot:run ; sleep 120
+  - docker run -d -p 8080:8080 -p 3000:3000 -p 3001:3001 -p 4022:22 -w /home/jhipster/jhipster-sample-app/ --name=jhipster jdubois/jhipster-docker mvn spring-boot:run ; sleep 360
 script:
   - docker logs jhipster
   - curl --retry 10 --retry-delay 5 -I http://localhost:8080/ | grep "HTTP/1.1 200 OK"

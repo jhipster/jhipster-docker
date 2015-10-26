@@ -1,36 +1,32 @@
 # DOCKER-VERSION 0.7.1
-FROM      ubuntu:14.04
+FROM      ubuntu:trusty
 MAINTAINER Julien Dubois <julien.dubois@gmail.com>
 
-# make sure the package repository is up to date
-RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
-RUN apt-get -y update
+ENV JAVA_VERSION 8
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-# install python-software-properties (so you can do add-apt-repository)
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python-software-properties software-properties-common
+ENV MAVEN_VERSION 3.3.3
+ENV MAVEN_HOME /usr/share/maven
+ENV PATH "$PATH:$MAVEN_HOME/bin"
 
-# install SSH server so we can connect multiple times to the container
-RUN apt-get -y install openssh-server && mkdir /var/run/sshd
+RUN apt-get install -y curl
+RUN curl -fsSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
+  && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
+  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-# install oracle java from PPA
-RUN add-apt-repository ppa:webupd8team/java -y
-RUN apt-get update
-RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get -y install oracle-java8-installer && apt-get clean
+RUN echo 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /etc/apt/sources.list && \
+    echo 'deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /etc/apt/sources.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C2518248EEA14886 && \
+    apt-get update && \
+    echo oracle-java${JAVA_VER}-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections && \
+    apt-get install -y --force-yes --no-install-recommends oracle-java${JAVA_VERSION}-installer oracle-java${JAVA_VERSION}-set-default && \
+    apt-get clean && \
+    rm -rf /var/cache/oracle-jdk${JAVA_VERSION}-installer
 
-# Set oracle java as the default java
-RUN update-java-alternatives -s java-8-oracle
-RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> ~/.bashrc
-
-# install utilities
-RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl
-
-# install maven
-RUN apt-get -y install maven
 
 # install node.js
 RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
-RUN apt-get install -y nodejs
+RUN apt-get install -y nodejs unzip python g++ build-essential
 
 # install yeoman
 RUN npm install -g yo bower grunt-cli
@@ -39,7 +35,6 @@ RUN npm install -g yo bower grunt-cli
 RUN npm install -g generator-jhipster@2.23.0
 
 # configure the "jhipster" and "root" users
-RUN echo 'root:jhipster' |chpasswd
 RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster && adduser jhipster sudo
 RUN echo 'jhipster:jhipster' |chpasswd
 
@@ -50,10 +45,13 @@ RUN cd /home/jhipster && \
     rm v2.23.0.zip
 RUN cd /home/jhipster/jhipster-sample-app-2.23.0 && npm install
 RUN cd /home && chown -R jhipster:jhipster /home/jhipster
-RUN cd /home/jhipster/jhipster-sample-app-2.23.0 && sudo -u jhipster mvn dependency:go-offline
+# RUN cd /home/jhipster/jhipster-sample-app-2.23.0
+# RUN sudo -u jhipster mvn dependency:go-offline
 RUN ln -s /home/jhipster/jhipster-sample-app-2.23.0 /home/jhipster/jhipster-sample-app
 
-# expose the working directory, the Tomcat port, the BrowserSync ports, the SSHD port, and run SSHD
-VOLUME ["/jhipster"]
-EXPOSE 8080 3000 3001 22
-CMD    /usr/sbin/sshd -D
+RUN echo "If you can see this, the docker container is running. To run the container in daemon mode use -d while running the container." > /home/jhipster/jhipster.info
+
+# expose the working directory, the Tomcat port, the BrowserSync ports
+VOLUME ["/home/jhipster/app"]
+EXPOSE 8080 3000 3001
+CMD    ["tail", "-f", "/home/jhipster/jhipster.info"]
