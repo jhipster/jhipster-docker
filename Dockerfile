@@ -2,7 +2,7 @@
 FROM      ubuntu:trusty
 MAINTAINER Julien Dubois <julien.dubois@gmail.com>
 
-ENV JAVA_VER 8
+ENV JAVA_VERSION 8
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ENV MAVEN_VERSION 3.3.3
@@ -19,9 +19,9 @@ RUN echo 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C2518248EEA14886 && \
     apt-get update && \
     echo oracle-java${JAVA_VER}-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections && \
-    apt-get install -y --force-yes --no-install-recommends oracle-java${JAVA_VER}-installer oracle-java${JAVA_VER}-set-default && \
+    apt-get install -y --force-yes --no-install-recommends oracle-java${JAVA_VERSION}-installer oracle-java${JAVA_VERSION}-set-default && \
     apt-get clean && \
-    rm -rf /var/cache/oracle-jdk${JAVA_VER}-installer
+    rm -rf /var/cache/oracle-jdk${JAVA_VERSION}-installer
 
 
 # install node.js
