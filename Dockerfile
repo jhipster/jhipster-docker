@@ -24,6 +24,9 @@ RUN echo 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /
     rm -rf /var/cache/oracle-jdk${JAVA_VERSION}-installer
 
 
+# install utilities
+RUN apt-get -y install vim git sudo zip bzip2 fontconfig curl
+
 # install node.js
 RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
 RUN apt-get install -y nodejs unzip python g++ build-essential
