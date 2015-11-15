@@ -1,8 +1,7 @@
-sudo: required
+os:
+  - linux
 services:
   - docker
-before_install:
-  - sudo service docker restart ; sleep 10
 install:
   - docker build -t jhipster/jhipster .
   - docker run --name jhipster -w /home/jhipster/app -p 8080:8080 -p 3000:3000 -p 3001:3001 -d -t jhipster/jhipster
