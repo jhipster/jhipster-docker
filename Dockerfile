@@ -22,14 +22,14 @@ RUN echo 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /
     echo 'deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /etc/apt/sources.list && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C2518248EEA14886 && \
     apt-get update && \
-    echo oracle-java${JAVA_VER}-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections && \
+    echo oracle-java${JAVA_VERSION}-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections && \
     apt-get install -y --force-yes --no-install-recommends oracle-java${JAVA_VERSION}-installer oracle-java${JAVA_VERSION}-set-default
 
 # install node.js
 RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
-RUN apt-get install -y nodejs unzip python g++ build-essential
+RUN apt-get install -y nodejs python g++ build-essential
 
-# install yeoman grunt bower grunt gulp
+# install yeoman bower grunt gulp
 RUN npm install -g yo bower grunt-cli gulp
 
 # install JHipster
@@ -39,18 +39,9 @@ RUN npm install -g generator-jhipster@${JHIPSTER_VERSION}
 # configure the "jhipster" user
 RUN groupadd jhipster && useradd jhipster -s /bin/bash -m -g jhipster -G jhipster && adduser jhipster sudo
 RUN echo 'jhipster:jhipster' |chpasswd
-
-# install the sample app
-RUN cd /home/jhipster && \
-    wget https://github.com/jhipster/jhipster-sample-app/archive/v${JHIPSTER_VERSION}.zip && \
-    unzip v${JHIPSTER_VERSION}.zip && \
-    rm v${JHIPSTER_VERSION}.zip
-RUN cd /home/jhipster/jhipster-sample-app-${JHIPSTER_VERSION} && npm install
-RUN cd /home && chown -R jhipster:jhipster /home/jhipster
-RUN ln -s /home/jhipster/jhipster-sample-app-${JHIPSTER_VERSION} /home/jhipster/jhipster-sample-app
-
-# add banner
+RUN mkdir -p /home/jhipster/app
 ADD banner.txt /home/jhipster/banner.txt
+RUN cd /home && chown -R jhipster:jhipster /home/jhipster
 
 # clean
 RUN apt-get clean && \
