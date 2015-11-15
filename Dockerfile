@@ -27,7 +27,7 @@ RUN echo 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /
 
 # install node.js
 RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
-RUN apt-get install -y nodejs unzip python g++ build-essential
+RUN apt-get install -y nodejs python g++ build-essential
 
 # install yeoman bower grunt gulp
 RUN npm install -g yo bower grunt-cli gulp
