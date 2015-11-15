@@ -4,8 +4,15 @@ services:
 before_install:
   - sudo service docker restart ; sleep 10
 install:
-  - docker build -t jdubois/jhipster-docker .
-  - docker run -d -p 8080:8080 -p 3000:3000 -p 3001:3001 -w /home/jhipster/jhipster-sample-app/ --name=jhipster jdubois/jhipster-docker mvn spring-boot:run ; sleep 360
+  - docker build -t jhipster/jhipster .
+  - docker run --name jhipster -w /home/jhipster/app -p 8080:8080 -p 3000:3000 -p 3001:3001 -d -t jhipster/jhipster
 script:
+  - docker ps
   - docker logs jhipster
-  - curl --retry 10 --retry-delay 5 -I http://localhost:8080/ | grep "HTTP/1.1 200 OK"
+  - chmod -R 777 $TRAVIS_BUILD_DIR/travis
+  - docker cp $TRAVIS_BUILD_DIR/travis/samples/app-default/.yo-rc.json jhipster:/home/jhipster/app/
+  - docker cp $TRAVIS_BUILD_DIR/travis/.config jhipster:/home/jhipster/
+  - docker exec -u jhipster -it jhipster ls -al /home/jhipster /home/jhipster/app /home/jhipster/.config/configstore
+  - docker exec -u jhipster -it jhipster yo jhipster --force --no-insight
+  - docker exec -u jhipster -it jhipster ls -al /home/jhipster/app
+  - docker images
