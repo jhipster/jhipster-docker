@@ -33,7 +33,7 @@ RUN apt-get install -y nodejs python g++ build-essential
 RUN npm install -g yo bower grunt-cli gulp
 
 # install JHipster
-ENV JHIPSTER_VERSION 2.24.0
+ENV JHIPSTER_VERSION 2.25.0
 RUN npm install -g generator-jhipster@${JHIPSTER_VERSION}
 
 # configure the "jhipster" user
