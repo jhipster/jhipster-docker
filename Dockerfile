@@ -33,7 +33,7 @@ RUN apt-get install -y nodejs python g++ build-essential
 RUN npm install -g yo bower grunt-cli gulp
 
 # install JHipster
-ENV JHIPSTER_VERSION 2.27.2
+ENV JHIPSTER_VERSION 3.0.0
 RUN npm install -g generator-jhipster@${JHIPSTER_VERSION}
 
 # configure the "jhipster" user
@@ -49,5 +49,5 @@ RUN apt-get clean && \
 
 # expose the working directory, the Tomcat port, the BrowserSync ports
 VOLUME ["/home/jhipster/app"]
-EXPOSE 8080 3000 3001
+EXPOSE 8080 9000 3001
 CMD    ["tail", "-f", "/home/jhipster/banner.txt"]

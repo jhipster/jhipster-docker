@@ -1,11 +1,11 @@
 jhipster-docker:
-  container_name: jhipster
-  image: jdubois/jhipster-docker
-  volumes:
-  - ~/jhipster:/home/jhipster/app
-  - ~/.m2:/home/jhipster/.m2
-  ports:
-  - "8080:8080"
-  - "3000:3000"
-  - "3001:3001"
-  working_dir: /home/jhipster/app
+    container_name: jhipster
+    image: jhipster/jhipster
+    volumes:
+        - ~/jhipster:/home/jhipster/app
+        - ~/.m2:/home/jhipster/.m2
+    ports:
+        - "8080:8080"
+        - "9000:9000"
+        - "3001:3001"
+    working_dir: /home/jhipster/app
